@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+const Api = axios.create({
     baseURL:'https://ListaServFesta-frontend.herokuapp.com'
 })
 

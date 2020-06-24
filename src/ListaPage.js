@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import Header from './Header';
 import Api from './Api';
-import { Table, TableRow, TableCell, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
+import { Table, TableRow, TableCell, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core'; 
 import DeleteIcon from '@material-ui/icons/Delete';
+
 
 function ListaPage() { 
 
