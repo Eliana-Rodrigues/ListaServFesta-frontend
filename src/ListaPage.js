@@ -4,11 +4,10 @@ import Api from './Api';
 import { Table, TableRow, TableCell, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core'; 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-
 function ListaPage() { 
 
-    const [ ListaServFesta, setListaSevrFesta ] = useState([]);
-    const [ produto, setProduto ] = useState('');
+    const [ ListaServFesta, setListaServFesta ] = useState([]);
+    const [ bebida, setBebida ] = useState('');
     const [ open, setOpen ] = useState(false);
     const [ marca, setMarca] = useState('');
     const [ valor, setValor ] = useState(0);
@@ -19,9 +18,9 @@ function ListaPage() {
 
     async function loadData() { 
 
-       const response = await Api.get('/produtos');
+       const response = await Api.get('/bebidas');
             const ListaServFesta = response.data;
-            setListaSevrFesta(ListaServFesta);
+            setListaServFesta(ListaServFesta);
     }
 
     useMemo(loadData, []);
@@ -36,14 +35,14 @@ function ListaPage() {
 
     async function salvar() { 
         if(id === 0) {
-        await Api.post('/produtos', { produto, marca, valor, volume, quantidade }); 
+        await Api.post('/bebidas', { bebida, marca, valor, volume, quantidade }); 
         }
         else {
-             await Api.put(`/produtos/${id}`, { produto, marca, valor, volume, quantidade });
+             await Api.put(`/bebidas/${id}`, { bebida, marca, valor, volume, quantidade });
         }
 
         loadData();
-        setProduto('');
+        setBebida('');
         setMarca('');
         setValor('');
         setVolume();
@@ -53,12 +52,12 @@ function ListaPage() {
     }
 
       async function apagar(id) {
-        await Api.delete(`/produtos/${id}`);
+        await Api.delete(`/bebidas/${id}`);
         loadData();
     }
 
     async function editar(listaservfesta) {
-        setProduto(listaservfesta.produto);
+        setBebida(listaservfesta.produto);
         setMarca(listaservfesta.marca);
         setValor(listaservfesta.valor);
         setVolume(listaservfesta.volume);
@@ -73,19 +72,19 @@ function ListaPage() {
             <Table style={{ marginTop: '80px' }}>
 
                 {
-                ListaServFesta.map(produto => (
+                ListaServFesta.map(bebida => (
                     <TableRow>
-                        <TableCell>{produto.id}</TableCell>
-                        <TableCell>{produto.produto}</TableCell>
-                        <TableCell>{produto.marca}</TableCell>
-                        <TableCell>{produto.valor}</TableCell>
-                        <TableCell>{produto.volume}</TableCell>
-                        <TableCell>{produto.quantidade}</TableCell>
+                        <TableCell>{bebida.id}</TableCell>
+                        <TableCell>{bebida.bebida}</TableCell>
+                        <TableCell>{bebida.marca}</TableCell>
+                        <TableCell>{bebidao.valor}</TableCell>
+                        <TableCell>{bebida.volume}</TableCell>
+                        <TableCell>{bebida.quantidade}</TableCell>
                          <TableCell>
                              <Button variant="outlined"
                                     color="secondary"
                                     size="small"
-                                    onClick={() => apagar(produto.id)}>
+                                    onClick={() => apagar(bebida.id)}>
                                     <DeleteIcon />Apagar
                                     </Button>
                          </TableCell>
@@ -93,7 +92,7 @@ function ListaPage() {
                                 <Button variant="outlined"
                                     color="secondary"
                                     size="small"
-                                    onClick={() => editar(produto)}>
+                                    onClick={() => editar(bebida)}>
                                     Editar
                                 </Button>
                             </TableCell>
@@ -108,16 +107,16 @@ function ListaPage() {
 
         <Dialog open={open} onClose={closeDialog}>
             <DialogTitle>{id === 0 ? 'Novo': 'Editar'} Item </DialogTitle>
-            <DialogContent>{id === 0 ? 'Cadastrar': 'Edita'} Novo Produto:
+            <DialogContent>{id === 0 ? 'Cadastrar': 'Edita'} Nova Bebida:
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="produto"
-                    label="Moduto"
+                    id="bebida"
+                    label="bebida"
                     type="text"
                     fullWidth
                     value={produto}
-                    onChange={e => setProduto(e.target.value)}
+                    onChange={e => setBebida(e.target.value)}
                 />
                 <TextField
                     margin="dense"
